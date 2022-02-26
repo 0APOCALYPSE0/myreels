@@ -24,7 +24,7 @@ import { AuthContext } from '../Context/AuthContext';
 
 export default function Login() {
     const store=useContext(AuthContext)
-    
+
     const useStyles=makeStyles({
         text1:{
             color:'grey',
@@ -52,19 +52,23 @@ export default function Login() {
             setError('')
             setLoading(true);
             let res=await login(email,password);
-            
+            store.setUser({
+                "name": res.user.displayName,
+                "email": res.user.email,
+                "isLoggedIn": true
+            });
             setLoading(false)
             history('/')
             console.log("redirect")
         }catch(error){
-            setError(error)
+            setError(error.message)
             setTimeout(()=>{
                 setError('')
             },2000)
             setLoading(false);
         }
     }
-    
+
   return (
       <div className='loginWrapper'>
          <div className='imgcar' style={{backgroundImage:'url('+bg+')',backgroundSize:'cover'}}>
@@ -114,14 +118,14 @@ export default function Login() {
                     Log In
                     </Button>
                 </CardActions>
-             
+
                 </Card>
                 <Card variant='outlined' className={classes.card2}>
                     <CardContent>
                         <Typography  className={classes.text1} variant="subtitle1">
                             Don't have an account ? <Link to="/signup" style={{textDecoration:'none'}}>Signup</Link>
                         </Typography>
-                    
+
                     </CardContent>
                 </Card>
             </div>
