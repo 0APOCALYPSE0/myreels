@@ -23,7 +23,6 @@ import 'pure-react-carousel/dist/react-carousel.es.css';
 import { AuthContext } from '../Context/AuthContext';
 
 export default function Login() {
-    const store=useContext(AuthContext)
 
     const useStyles=makeStyles({
         text1:{
@@ -45,14 +44,14 @@ export default function Login() {
     const [error,setError]=useState('');
     const [loading,setLoading]=useState(false);
     const history=useNavigate();
-    const {login}=useContext(AuthContext);
+    const {login, setUser}=useContext(AuthContext);
 
     const handleClick=async()=>{
         try{
             setError('')
             setLoading(true);
             let res=await login(email,password);
-            store.setUser({
+            setUser({
                 "name": res.user.displayName,
                 "email": res.user.email,
                 "isLoggedIn": true

@@ -6,7 +6,7 @@ import React,{useContext} from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 function PrivateRoute({element:Component,...rest}) {
-    const user = useContext(AuthContext).user;
+    const {user} = useContext(AuthContext);
     return (
         user.isLoggedIn ? <Outlet />:<Navigate to="/login" />
     )
