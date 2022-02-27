@@ -6,10 +6,9 @@ import React,{useContext} from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
 function PrivateRoute({element:Component,...rest}) {
-    const {users} = useContext(AuthContext) 
-    console.log(users)
+    const {user} = useContext(AuthContext);
     return (
-        users ? <Outlet />:<Navigate to="/login" />
+        user.isLoggedIn ? <Outlet />:<Navigate to="/login" />
     )
 }
 
