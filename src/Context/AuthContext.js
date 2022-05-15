@@ -6,7 +6,8 @@ export function AuthProvider({children}){
     const [user,setUser]=useState({
         "name": null,
         "email": null,
-        "isLoggedIn": false
+        "isLoggedIn": false,
+        "user": null
     });
     const [loading,setLoading]=useState(true)
 
@@ -17,17 +18,17 @@ export function AuthProvider({children}){
         return auth.signInWithEmailAndPassword(email,password);
     }
     function logout(){
-        setUser({
-            "name": null,
-            "email": null,
-            "isLoggedIn": false
-        });
         return auth.signOut()
     }
 
     useEffect(()=>{
-        const unsub=auth.onAuthStateChanged(()=>{
-            setUser(user);
+        const unsub=auth.onAuthStateChanged((user)=>{
+            setUser({
+              "name": user ? user.displayName : null ,
+              "email": user ? user.email : null,
+              "isLoggedIn": user ? true : false,
+              "user": user
+            });
             setLoading(false);
         })
         return()=>{
@@ -37,7 +38,6 @@ export function AuthProvider({children}){
 
     const store={
         user,
-        setUser,
         signup,
         login,
         logout

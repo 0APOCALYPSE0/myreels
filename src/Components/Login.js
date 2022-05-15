@@ -2,10 +2,9 @@ import * as React from 'react';
 import { useContext,useState } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
-import { CarouselProvider, Slider, Slide, ButtonBack, ButtonNext,Image } from 'pure-react-carousel';
+import { Button, CardActions } from '@mui/material';
+import { CarouselProvider, Slider, Slide,Image } from 'pure-react-carousel';
 import { makeStyles } from '@mui/styles';
 import Alert from '@mui/material/Alert';
 import './Login.css'
@@ -18,7 +17,6 @@ import img4 from '../Assets/img4.jpeg'
 import img5 from '../Assets/img5.jpg'
 import TextField from '@mui/material/TextField';
 import {Link,useNavigate} from 'react-router-dom'
-import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import { AuthContext } from '../Context/AuthContext';
 
@@ -44,18 +42,13 @@ export default function Login() {
     const [error,setError]=useState('');
     const [loading,setLoading]=useState(false);
     const history=useNavigate();
-    const {login, setUser}=useContext(AuthContext);
+    const {login}=useContext(AuthContext);
 
     const handleClick=async()=>{
         try{
             setError('')
             setLoading(true);
             let res=await login(email,password);
-            setUser({
-                "name": res.user.displayName,
-                "email": res.user.email,
-                "isLoggedIn": true
-            });
             setLoading(false)
             history('/')
             console.log("redirect")
@@ -104,7 +97,7 @@ export default function Login() {
                     <Typography  className={classes.text1} variant="subtitle1">
                         Sign up to see photos and videos from your friends
                     </Typography>
-                    {error!='' && <Alert severity="error">{error}</Alert>}
+                    {error!=='' && <Alert severity="error">{error}</Alert>}
 
                     <TextField id="outlined-basic" label="Email" variant="outlined" fullWidth={true} margin="dense" size='small' value={email} onChange={(e)=>setEmail(e.target.value)}/>
                     <TextField id="outlined-basic" label="Password" variant="outlined" fullWidth={true} margin="dense" size='small' value={password} onChange={(e)=>setPassword(e.target.value)}/>

@@ -2,9 +2,8 @@ import * as React from 'react';
 import { useState,useContext } from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { Button, CardActionArea, CardActions } from '@mui/material';
+import { Button, CardActions } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import Alert from '@mui/material/Alert';
 import './Signup.css'
@@ -14,8 +13,9 @@ import {Link,useNavigate} from 'react-router-dom'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { AuthContext } from '../Context/AuthContext';
 import { database,storage } from './firebase';
+
 export default function Signup() {
-    
+
     const useStyles=makeStyles({
         text1:{
             color:'grey',
@@ -85,7 +85,6 @@ export default function Signup() {
             setTimeout(()=>{
                 setError('')
             },2000)
-            
         }
     }
   return (
@@ -99,7 +98,7 @@ export default function Signup() {
                     <Typography  className={classes.text1} variant="subtitle1">
                         Sign up to see photos and videos from your friends
                     </Typography>
-                    {error!='' && <Alert severity="error">{error}</Alert>}
+                    {error!=='' && <Alert severity="error">{error}</Alert>}
 
                     <TextField id="outlined-basic" label="Email" variant="outlined" fullWidth={true} margin="dense" size='small' value={email} onChange={(e)=>setEmail(e.target.value)}/>
                     <TextField id="outlined-basic" label="Password" variant="outlined" fullWidth={true} margin="dense" size='small' value={password} onChange={(e)=>setPassword(e.target.value)}/>
@@ -118,7 +117,6 @@ export default function Signup() {
                     <Typography  className={classes.text1} variant="subtitle1">
                         By signing up, you agree to our Terms, Conditions and Cookies policy.
                     </Typography>
-                   
                 </CardContent>
                 </Card>
                 <Card variant='outlined' className={classes.card2}>
@@ -126,7 +124,7 @@ export default function Signup() {
                         <Typography  className={classes.text1} variant="subtitle1">
                             Having an account ? <Link to="/login" style={{textDecoration:'none'}}>Login</Link>
                         </Typography>
-                    
+
                     </CardContent>
                 </Card>
             </div>

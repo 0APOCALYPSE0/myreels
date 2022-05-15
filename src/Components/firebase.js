@@ -6,12 +6,13 @@ import 'firebase/compat/firestore'
 
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCvKPVow0hHVCpGsttHc3AUdZI3aie6rPY",
-    authDomain: "reels-ad6bd.firebaseapp.com",
-    projectId: "reels-ad6bd",
-    storageBucket: "reels-ad6bd.appspot.com",
-    messagingSenderId: "604865635922",
-    appId: "1:604865635922:web:498799c381cf64843de18b"
+    apiKey: "AIzaSyAjMWh6qHD5JpjKIdeDaNKPmBpRMhyKWco",
+    authDomain: "reels-b3efe.firebaseapp.com",
+    projectId: "reels-b3efe",
+    storageBucket: "reels-b3efe.appspot.com",
+    messagingSenderId: "567321985515",
+    appId: "1:567321985515:web:c4830d2b915472148759ae",
+    measurementId: "G-HXWFCJL7FQ"
 };
 
 // Initialize Firebase
@@ -22,6 +23,7 @@ export const auth=firebase.auth();
 const firestore=firebase.firestore();
 export const database={
     users:firestore.collection('users'),
+    posts:firestore.collection('posts'),
     getTimeStamp:firebase.firestore.FieldValue.serverTimestamp
 }
 
