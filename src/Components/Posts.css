@@ -31,7 +31,7 @@
 .icon-styling {
   position: absolute;
   bottom: 2%;
-  left: 9%;
+  left: 7%;
 }
 
 .like {
@@ -42,4 +42,49 @@
 .unlike {
   cursor: pointer;
   color: white;
+}
+
+.chat-styling{
+  position: absolute;
+  cursor: pointer;
+  bottom: 2%;
+  left: 14%;
+  color: white;
+}
+
+.modal-container{
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.video-modal{
+  width: 50%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-modal video{
+  height: 85vh;
+  width: 100%;
+}
+
+.comment-modal{
+  width: 50%;
+  height: 100%;
+}
+
+.unlike2{
+  color: black;
+  cursor: pointer;
+}
+
+.card1{
+  height: 70vh;
+}
+
+.card2{
+  /* height: 10vh; */
 }
