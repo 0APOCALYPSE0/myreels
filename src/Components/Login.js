@@ -16,7 +16,7 @@ import img3 from '../Assets/img3.jpg'
 import img4 from '../Assets/img4.jpeg'
 import img5 from '../Assets/img5.jpg'
 import TextField from '@mui/material/TextField';
-import {Link,useNavigate} from 'react-router-dom'
+import {Link,useNavigate} from 'react-router-dom';
 import 'pure-react-carousel/dist/react-carousel.es.css';
 import { AuthContext } from '../Context/AuthContext';
 

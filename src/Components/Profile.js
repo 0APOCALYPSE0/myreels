@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { database } from './firebase';
 import CircularProgress from '@mui/material/CircularProgress';
-import Avatar from '@mui/material/Avatar';
-import Video from './Video';
-import './Posts.css';
-import Like from './Like';
+import Navbar from './Navbar';
+import Typography from '@mui/material/Typography';
+import './Profile.css';
 import Like2 from './Like2';
-import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import Dialog from '@mui/material/Dialog';
 import Card from '@mui/material/Card';
-import Typography from '@mui/material/Typography';
 import AddComment from './AddComment';
 import Comments from './Comments';
 
-function Posts({userData}) {
+function Profile () {
+  const {id} = useParams();
+  const [userData, setUserData] = useState(null);
   const [posts, setPosts] = useState(null);
   const [open, setOpen] = useState(null);
 
@@ -26,33 +26,54 @@ function Posts({userData}) {
   };
 
   useEffect(() => {
-    let postArray = [];
-    const unsub = database.posts.orderBy('createdAt', 'desc').onSnapshot(querySnapshot => {
-      postArray = [];
-      querySnapshot.forEach(doc => {
-        let data = { ...doc.data(), postId: doc.id };
-        postArray.push(data);
-      });
-      setPosts(postArray);
-    });
-    return unsub;
-  }, []);
+    database.users.doc(id).onSnapshot(snap => {
+      setUserData(snap.data());
+    })
+  }, [id]);
+
+  useEffect(() => {
+    (async function fetchPosts() {
+      if(userData !== null){
+        let posts = [];
+        for(let i=0; i<userData.postIds.length; i++){
+          let post = await database.posts.doc(userData.postIds[i]).get();
+          posts.push({...post.data(), postId: post.id});
+        }
+        setPosts(posts);
+      }
+    }())
+  });
+
   return (
-    <div>
-      {
-        posts === null || userData === null ? <CircularProgress /> :
-        <div className='video-container'>
+    <>
+    {
+      posts === null || userData === null ? <CircularProgress /> :
+      <div>
+        <Navbar userData={userData} />
+        <div className="spacer"></div>
+        <div className="container">
+          <div className="profile">
+            <div className="profile-img">
+              <img src={userData.profileUrl} alt={userData.fullname} />
+            </div>
+            <div className="user-info">
+              <Typography variant="h5">
+                Email: {userData.email}
+              </Typography>
+              <Typography variant="h6">
+                Posts: {userData.postIds.length}
+              </Typography>
+            </div>
+          </div>
+          <hr style={{marginTop: '3rem', marginBottom: '3rem'}}/>
+          <div className='posts'>
           {
             posts.map((post, index) => (
               <React.Fragment key={index}>
                  <div className='videos'>
-                    <Video src={post.postUrl} />
-                    <div className="fa" style={{ display: 'flex'}}>
-                      <Avatar src={userData.profileUrl} />
-                      <h4>{userData.fullname}</h4>
-                    </div>
-                    <Like userData={userData} postData={post} />
-                    <ChatBubbleIcon className="chat-styling" onClick={() => handleClickOpen(post.pId)} />
+                    <video muted="muted" onClick={() => handleClickOpen(post.pId)}>
+                      <source  src={post.postUrl}></source>
+                    </video>
                     <Dialog
                       open={open === post.pId}
                       onClose={handleClose}
@@ -86,9 +107,11 @@ function Posts({userData}) {
             ))
           }
         </div>
-      }
-    </div>
+        </div>
+      </div>
+    }
+    </>
   )
 }
 
-export default Posts
+export default Profile;
