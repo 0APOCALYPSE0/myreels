@@ -37,6 +37,26 @@ function Posts({userData}) {
     });
     return unsub;
   }, []);
+  const callback = (entries) => {
+    entries.forEach(entry => {
+      let element = entry.target.childNodes[0];
+      element.play().then(() => {
+        if(!element.paused && !element.isIntersecting){
+          element.pause();
+        }
+      })
+    });
+  }
+  let observer = new IntersectionObserver(callback, { threshold: 0.6 });
+  useEffect(() => {
+    const elements = document.querySelectorAll('.videos');
+    elements.forEach(element => {
+      observer.observe(element);
+    });
+    return () => {
+      observer.disconnect();
+    }
+  },[posts]);
   return (
     <div>
       {
